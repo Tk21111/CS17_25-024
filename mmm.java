@@ -1,99 +1,106 @@
+import java.util.Random;
 import java.util.Scanner;
 import java.lang.Thread;
-import java.util.Arrays;
-import java.util.Random;
+
 
 class MyThread implements Runnable {
     
-    public boolean win = false;
-    public Scanner sc(){
-        return new Scanner(System.in);
+    public String win = null;
+    
+    private Scanner sc = new Scanner(System.in);
+
+    public void clearWin(){
+        this.win = null;
     }
     
-    public boolean getWin(){
+    public String getWin(){
+        System.out.println(win);
         return this.win;
-    }
-
-    static void generate(int pointAt){
-        int fullCanvas = 9;
-        String drawCanvas = "";
-        
-        for(int i = 0 ; i < fullCanvas; i++){
-            if(i == pointAt){
-                drawCanvas += "x";
-            } else {
-                drawCanvas += i;
-            }
-        }
-        System.out.println(Thread.currentThread().threadId());
-        System.out.println(drawCanvas);
     }
 
     public void run() {
         // Code to be executed in the new thread
-            Random r = new Random();
-            int iRandom = r.nextInt(9);
-            
-            generate(iRandom);
-            
-            
-            int i = sc().nextInt();
-            
-            if(iRandom == i){
-                System.out.println(Thread.currentThread().threadId());
-                System.out.println("win");
-                win = true;
-               
-            } else {
-                System.out.println(Thread.currentThread().threadId());
-                System.out.println("loss");
-            }
+        while (true) {
+            this.win = sc.nextLine();
+        }
+        
         
     }
 }
 
 class ThreadExample {
-    public static void main(String[] args) throws InterruptedException {
+
+    private static int fullCanvas = 5;
+
+    static void generate(int[] pointAt , int[] check){
+        
+    
+
+        for(int i = 0 ; i < fullCanvas; i++){
+
+            String drawCanvas = "";
+
+            for (int f = 0 ; f < fullCanvas ; f++){
+                if(i == check[0] && f == check[1] && i == pointAt[0] && f == pointAt[1]){
+                    drawCanvas += "X";
+                } else if(i == check[0] && f == check[1] ){
+               
+                    drawCanvas += "x";
+                } else if(i == pointAt[0] && f == pointAt[1]) {
+                    drawCanvas += "0";
+                } else {
+                    drawCanvas += "-";
+                }
+            }
+
+            System.out.println(drawCanvas);
+            
+        }
+
+        System.out.println("=======================================");
 
         
-
+        
+    }
+    public static void main(String[] args) throws InterruptedException {
 
         boolean win = false;
-        boolean use1 = true;
+
+        MyThread myRunnable1 = new MyThread(); // <-- Create MyThread separately
+        Thread thread1 = new Thread(myRunnable1);
+        thread1.start();
+
+        Random r = new Random();
+
+        int[] check = new int[]{ r.nextInt(fullCanvas) ,r.nextInt(fullCanvas)  };
+        //int[] check = new int[]{ 1,1 };
 
         while (!win) {
 
-            MyThread myRunnable1 = new MyThread(); // <-- Create MyThread separately
-            Thread thread1 = new Thread(myRunnable1);
-            MyThread myRunnable2 = new MyThread(); // <-- Create MyThread separately
-            Thread thread2 = new Thread(myRunnable2);
+            boolean sw = false;
 
+            for(int i = 0 ; i < fullCanvas; i++){
+                for (int f = 0 ; f < fullCanvas ; f++){
+
+                    System.err.print(check[0] + " , " + check[1] + " ||");
+                    System.err.print(i + " , " + f + "\n");
+                    
+                   
+                    
             
+                    Thread.sleep(200);
+     
+                    if(myRunnable1.getWin() != null && check[0] == i && check[1]  ==f ){
+                        win = true;
+                        break;
+                    }
+                    myRunnable1.clearWin();
+                }   
 
-            if(use1){
-                System.out.println("1 : ");
-               
-                thread1.start();
-                thread1.join(5500);
-                win = myRunnable2.getWin();
-                use1 = false;
-
-            } else {
-                System.out.println("2 : ");
-
-         
-                thread2.start();
-                thread2.join(5500);
-                win = myRunnable1.getWin();
-        
-                use1 = true;
-
+                if(win){
+                    break;
+                }
             }
-
-            
-
-            
-            
         }
        
         System.out.println("win");
