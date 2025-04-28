@@ -85,9 +85,7 @@ class ThreadExample {
                     System.err.print(check[0] + " , " + check[1] + " ||");
                     System.err.print(i + " , " + f + "\n");
                     
-                   
-                    
-            
+                    generate(new int[]{i,f}, check);
                     Thread.sleep(200);
      
                     if(myRunnable1.getWin() != null && check[0] == i && check[1]  ==f ){
