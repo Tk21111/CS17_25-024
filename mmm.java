@@ -51,7 +51,7 @@ class MyThread implements Runnable {
 
 class ThreadExample {
 
-    public static int fullCanvas = 5;
+    public static int fullCanvas = 7;
  
     static void generate(int[] pointAt , int[][] checks){
 
@@ -138,6 +138,7 @@ class ThreadExample {
                             
                         }
                     } 
+                    System.out.println(Arrays.toString(timeShow));
                 }
 
                 //reset input loop
@@ -358,7 +359,7 @@ class ThreadExample {
             });
     
             System.out.println("");
-            ShowSentence(String.format("your's refection is delays by : %f sec with %d fail attemp ", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , notAttemp.get() ));
+            ShowSentence(String.format("your's refection is delays by : %f ms with %d fail attemp ", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , notAttemp.get() ));
 
             
             //fail multi input behave
