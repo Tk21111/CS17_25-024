@@ -51,9 +51,10 @@ class MyThread implements Runnable {
 
 class ThreadExample {
 
+
     public static int fullCanvas = 7;
  
-    static void generate(int[] pointAt , int[][] checks){
+    static void generate(int[] pointAt , int[][] checks , Boolean[] checked){
 
 
         for(int i = 0 ; i < fullCanvas; i++){
@@ -63,14 +64,20 @@ class ThreadExample {
             //genearate base col.
             for (int f = 0 ; f < fullCanvas ; f++){
                 
-                drawCanvas[f] = "-";
+                drawCanvas[f] =  "-";
                 
             }
 
             //insert point
-            for (int[] check : checks) {
-                if(i == check[0]){
-                    drawCanvas[check[1]] = "x";
+            for (int check = 0 ; check < checks.length ; check++) {
+                if(i == checks[check][0]){
+
+                    if(((checks[check][0]  < pointAt[0] ) || (checks[check][0] == pointAt[0] && checks[check][1] < pointAt[1])) && !checked[check]){
+                        drawCanvas[checks[check][1]] = "[]" ;
+                    } else {
+                        drawCanvas[checks[check][1]] =  "x" ;
+                    }
+                    
                 }
             }
 
@@ -109,19 +116,23 @@ class ThreadExample {
 
         
         long[] timeShow = new long[check.length];
+        Boolean[] checked = new Boolean[check.length];
+
+
         for (int t = 0 ; t < timeShow.length ; t++) {
             timeShow[t] = -10;
+            checked[t] = false;
         }
         long timeShowTmp = 0;
 
-        int checked = 0;
+        
 
 
         for(int i = ii ; i < fullCanvas; i++){
             for (int f = ff ; f < fullCanvas ; f++){
     
                 //generate wna wait
-                generate(new int[]{i,f}, check);
+                generate(new int[]{i,f}, check , checked);
 
                 //timeshow
                 timeShowTmp = System.currentTimeMillis();
@@ -133,7 +144,7 @@ class ThreadExample {
 
                     for(int point = 0 ; point < check.length ; point++){
                         if(check[point][0] == i && check[point][1] == f){
-                            checked++;
+                            checked[point] = true;
                             timeShow[point] = Runnable.getTime() - timeShowTmp;
                             
                         }
@@ -146,7 +157,13 @@ class ThreadExample {
             }   
 
             //stucture prob.
-            if(checked == check.length){
+            int count = 0;
+            for (int t = 0 ; t < checked.length ; t++) {
+                if(checked[t] == true){
+                    count++;
+                }
+            }
+            if(check.length == count ){
                 break;
             }
         }
@@ -197,7 +214,7 @@ class ThreadExample {
         System.out.println("");
         ShowSentence("This an example grid : ");
         
-        generate(new int[]{1,0} , new int[][]{{2,3}});
+        generate(new int[]{1,0} , new int[][]{{2,3}} , new Boolean[]{false});
 
         System.out.println("");
         ShowSentence("0 is pointer ");
@@ -322,16 +339,33 @@ class ThreadExample {
                     
                     
                 }
+
+            
+                //sort 
+                
+                for (int p = 0 ; p < check.length ; p++){
+                    int indexMin = p;
+                    for (int pp = p+1; pp < check.length ; pp++){
+                        if((check[pp][0] < check[indexMin][0]) || (check[pp][0] == check[indexMin][0]) && check[pp][1] < check[indexMin][1]){
+                            indexMin = pp;
+                        }
+                    }
+                    int[] tmp = check[indexMin];
+                    check[indexMin] = check[p];
+                    check[p]  = tmp;
+                }
+
+                // for (int[] s : check) {
+                //     System.out.print(Arrays.toString(s));
+                // }
     
-                //swith for smooth trasition //TODO
+                //swith for smooth trasition //TODO - NO
     
                 reflectionArr.add(Game(Runnable, check, mainLoopWait , 0 , 0));
     
                 
             }
-            thread1.interrupt();
-            
-            
+          
             System.out.println("");
             ShowSentence("your's refection is :");
             reflectionArr.forEach(val -> System.out.print(Arrays.toString(val)));
@@ -360,13 +394,13 @@ class ThreadExample {
     
             System.out.println("");
             ShowSentence(String.format("your's refection is delays by : %f ms with %d fail attemp ", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , notAttemp.get() ));
-
+            ShowSentence("If want to stop just stop terminal too lazy for that");
             
             //fail multi input behave
 
             // //break of user input of input loop
             // ShowSentence("press any key to continous : ");
-            Thread.sleep(10000);
+            Thread.sleep(200);
                 
             
             
