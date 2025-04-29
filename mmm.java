@@ -37,9 +37,10 @@ class MyThread implements Runnable {
         // Code to be executed in the new thread
      
         while (true) {
-            System.out.println("check");
+
             this.win = sc.nextLine();
             if(win != null && timeclick == 0 ){
+                System.out.println(win);
                 timeclick = System.currentTimeMillis();
             }
         }
@@ -52,32 +53,38 @@ class ThreadExample {
 
     public static int fullCanvas = 5;
  
-    static void generate(int[] pointAt , int[][] check){
+    static void generate(int[] pointAt , int[][] checks){
 
 
         for(int i = 0 ; i < fullCanvas; i++){
 
-            String drawCanvas = "";
+            String[] drawCanvas = new String[fullCanvas];
 
+            //genearate base col.
             for (int f = 0 ; f < fullCanvas ; f++){
-                boolean place = false;
-                for (int[] point : check) {
-                    if(i == point[0] && f == point[1] && i == pointAt[0] && f == pointAt[1]){
-                        drawCanvas += "X";
-                        place = true;
-                    } else if(i == point[0] && f == point[1]){
-                        drawCanvas += "x";
-                    } 
-                }
+                
+                drawCanvas[f] = "-";
+                
+            }
 
-                if(i == pointAt[0] && f == pointAt[1] && !place) {
-                    drawCanvas += "0";
-                } else {
-                    drawCanvas += "-";
+            //insert point
+            for (int[] check : checks) {
+                if(i == check[0]){
+                    drawCanvas[check[1]] = "x";
                 }
             }
 
-            System.out.println(drawCanvas);
+            if(i == pointAt[0]){
+
+                if(drawCanvas[pointAt[1]].equals("x")){
+                    drawCanvas[pointAt[1]] = "X";
+                } else {
+                    drawCanvas[pointAt[1]] = "0";
+                }
+
+            }
+            
+            System.out.println(Arrays.toString(drawCanvas));
             
         }
 
@@ -131,11 +138,6 @@ class ThreadExample {
                             
                         }
                     } 
-
-
-                    Runnable.clearWin();
-                    break;
-                   
                 }
 
                 //reset input loop
@@ -164,7 +166,7 @@ class ThreadExample {
         MyThread RunnableEx = new MyThread(); 
         Thread ThreadEx = new Thread(RunnableEx);
         ThreadEx.start();
-        long refEx = Game(RunnableEx, new int[][]{{2,3}}, 1000 , 2 , 0)[0];
+        long refEx = Game(RunnableEx, new int[][]{{2,3} , {2,4}}, 1000 , 2 , 0)[0];
         System.out.println("Nice....");
         System.out.println(refEx);
     }
@@ -230,7 +232,7 @@ class ThreadExample {
 
         if(skip.equals("N")){
             //Instuction(sc);
-            //TestRun();
+            TestRun();
         }
 
         System.out.println("");
@@ -252,12 +254,14 @@ class ThreadExample {
         
         //int[] check = new int[]{ 1,1 };
 
-        //set up in put loop
-        MyThread Runnable = new MyThread(); 
-        Thread thread1 = new Thread(Runnable);
+       
 
         while (again) {
 
+             //set up in put loop
+            MyThread Runnable = new MyThread(); 
+            Thread thread1 = new Thread(Runnable);
+            
             System.out.println("");
             ShowSentence("READY");
             System.out.println("");
@@ -283,19 +287,31 @@ class ThreadExample {
                
                 int[][] check = new int[pointPerGame][2];
                 for (int point = 0 ; point < pointPerGame ; point++){
-                    boolean dup = false;
+                    boolean dup;
 
                     do{
-                        check[point][0] = r.nextInt(fullCanvas);
-                        check[point][1] = r.nextInt(fullCanvas);
+                        
+                        dup = false;
+
+                        int i = r.nextInt(fullCanvas);
+                        int f = r.nextInt(fullCanvas);
 
                         if(check.length > 1){
                             for(int pointCheck = 0 ; pointCheck < check.length -1 ; pointCheck++){
                        
-                                if(check[point][0] == check[pointCheck][0] && check[point][1] == check[pointCheck][1] && !dup){
+                                if(i == check[pointCheck][0] && f == check[pointCheck][1]){
                                     dup = true;
-                                } 
+
+                                    //change instant out of for loop
+                                    break;
+                                }
                             }
+                        }
+
+                         // If no duplicate, assign to the array
+                        if (!dup) {
+                            check[point][0] = i;
+                            check[point][1] = f;
                         }
                         
                     } while(dup);
@@ -311,7 +327,8 @@ class ThreadExample {
                 
             }
             thread1.interrupt();
-           
+            
+            
             System.out.println("");
             ShowSentence("your's refection is :");
             reflectionArr.forEach(val -> System.out.print(Arrays.toString(val)));
@@ -339,22 +356,28 @@ class ThreadExample {
             });
     
             System.out.println("");
-            ShowSentence(String.format("your's refection is delays by : %f sec with %d fail attemp and %d  not attemp", (float)(AvgRes.get() / AvgResCount.get() / 1000) , failAttemp.get() , notAttemp.get() ));
-            ShowSentence("Play again ? [YC] = yes change setting , [Y] = yes no change  , [N] = no");
-            String retry = sc.next().toUpperCase();
-            if(retry.equals("N")){
-                again = false;
-                break;
-            } else if(retry.equals("YC")){
-                ShowSentence("change speed (ms)");
-                mainLoopWait = sc.nextLong();
-                ShowSentence("how many time");
-                timeplay = sc.nextInt();
-            }
+            ShowSentence(String.format("your's refection is delays by : %f sec with %d fail attemp and %d  not attemp", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , failAttemp.get() , notAttemp.get() ));
 
             
-        }
+            //fail multi input behave
 
-        
+            // //break of user input of input loop
+            // ShowSentence("press any key to continous : ");
+            Thread.sleep(10000);
+                
+            
+            
+            // ShowSentence("Play again ? [YC] = yes change setting , [Y] = yes no change  , [N] = no");
+            //     String retry = sc.next().toUpperCase();
+            //     if(retry.equals("N")){
+            //         again = false;
+            //         break;
+            //     } else if(retry.equals("YC")){
+            //         ShowSentence("change speed (ms) : ");
+            //         mainLoopWait = sc.nextLong();
+            //         ShowSentence("how many time : ");
+            //         timeplay = sc.nextInt();
+            //     }
+        }
     }
 } 
