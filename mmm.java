@@ -216,7 +216,7 @@ class ThreadExample {
 
         //init sc & set mainLoopWait
         Scanner sc = new Scanner(System.in);
-        ShowSentence("Select your's input range (0-?) (ms) : ");
+        ShowSentence("Select your's input range (0-2000) (ms) : ");
         long mainLoopWait  = sc.nextLong();
 
        
@@ -243,6 +243,7 @@ class ThreadExample {
         System.out.println("");
         ShowSentence("point per game : ");
         int pointPerGame = sc.nextInt();
+        pointPerGame = pointPerGame > fullCanvas*fullCanvas ? fullCanvas*fullCanvas : pointPerGame; 
         
 
 //         //sc.close();
@@ -273,6 +274,7 @@ class ThreadExample {
                 Thread.sleep(70);
             }
             ShowSentence("GO...");
+            System.out.println("");
 
          
             ArrayList<long[]>reflectionArr = new ArrayList<long[]>();
@@ -333,7 +335,7 @@ class ThreadExample {
             ShowSentence("your's refection is :");
             reflectionArr.forEach(val -> System.out.print(Arrays.toString(val)));
     
-            AtomicInteger failAttemp = new AtomicInteger(0);
+            // AtomicInteger failAttemp = new AtomicInteger(0);
             AtomicInteger notAttemp = new AtomicInteger(0);
             AtomicLong AvgRes = new AtomicLong(0);
             AtomicLong AvgResCount = new AtomicLong(0);
@@ -356,7 +358,7 @@ class ThreadExample {
             });
     
             System.out.println("");
-            ShowSentence(String.format("your's refection is delays by : %f sec with %d fail attemp and %d  not attemp", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , failAttemp.get() , notAttemp.get() ));
+            ShowSentence(String.format("your's refection is delays by : %f sec with %d fail attemp ", (float)(AvgRes.get() / (AvgResCount.get() == 0 ? 1 :AvgResCount.get())) , notAttemp.get() ));
 
             
             //fail multi input behave
