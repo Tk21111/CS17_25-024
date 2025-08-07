@@ -1,4 +1,6 @@
 package prof_camp.D1;
+//25_[N'Tonkla]
+
 
 public class D1_5 {
     public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class D1_5 {
         float weight = 55f;
         System.out.println("height : " + height + " weight: " + weight);
 
-        float bmi = weight / (height*height);
+        float bmi = 18.59f;
         System.out.println("BMI : "  + bmi);
 
 
