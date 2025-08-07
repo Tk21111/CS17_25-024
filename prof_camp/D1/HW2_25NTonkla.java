@@ -2,7 +2,7 @@ package prof_camp.D1;
 
 //25_[N'Tonkla]
 
-public class D1_1 {
+public class HW2_25NTonkla {
 
     public static void main(String[] args) {
         int maxXY = 5;

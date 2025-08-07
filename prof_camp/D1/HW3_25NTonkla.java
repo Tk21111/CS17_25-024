@@ -2,7 +2,7 @@ package prof_camp.D1;
 
 //25_[N'Tonkla]
 
-public class D1_2 {
+public class HW3_25NTonkla {
     public static void main(String[] args) {
         String strIn = "CS is the best";
 

@@ -1,7 +1,7 @@
 package prof_camp.D1;
 //25_[N'Tonkla]
 
-public class D1_3 {
+public class HW4_25NTonkla {
     public static void main(String[] args) {
         int hr = 25;
         int amount = 0;

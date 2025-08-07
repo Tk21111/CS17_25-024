@@ -1,7 +1,7 @@
 package prof_camp.D1;
 //25_[N'Tonkla]
 
-public class D1 {
+public class HW1_25NTonkla {
 
     public static void main(String[] args) {
         int maxXY = 10;

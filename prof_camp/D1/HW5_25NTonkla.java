@@ -1,7 +1,7 @@
 package prof_camp.D1;
 //25_[N'Tonkla]
 
-public class D1_4 {
+public class HW5_25NTonkla {
     public static void main(String[] args) {
         double numDouble = 44310000000000000000000d;
         String num = Double.toString(numDouble);
