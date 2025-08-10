@@ -1,5 +1,6 @@
 package prof_camp.D3;
 
+//25
 public class Lab3_1_CSPD6825 {
     public static class StandUser {
         
@@ -17,6 +18,7 @@ public class Lab3_1_CSPD6825 {
 
         public void summon()
         {
+            isSummon = true;
             System.out.println(name + " summon " + stand);
         }
 
