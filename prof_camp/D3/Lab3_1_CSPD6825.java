@@ -16,6 +16,16 @@ public class Lab3_1_CSPD6825 {
             this.specialMove = specialMove;
         }
 
+        StandUser(String name , String stand)
+        {
+            this.name = name;
+            this.stand = stand;
+        }
+
+        StandUser(){
+        
+        }
+
         public void summon()
         {
             isSummon = true;
@@ -41,7 +51,7 @@ public class Lab3_1_CSPD6825 {
 
     public static void main(String[] args) {
         StandUser a = new StandUser("pakapong", "swiming in the air", false, "bigger than");
-        StandUser b = new StandUser("pakapong", "swiming in the air", null, null);
-        StandUser c = new StandUser(null, null, null, null);
+        StandUser b = new StandUser("pakapong", "swiming in the air");
+        StandUser c = new StandUser();
     }
 }
