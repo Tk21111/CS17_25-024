@@ -1,10 +1,11 @@
 package HW;
 
-public class RRR {
-    public static void main(String[] args) {
-		// demo1_push_test();
+public class MainStack {
+
+	public static void main(String[] args) {
+		demo1_push_test();
 		// demo2_pop_test();
-		demo3_test();
+		// demo3_test();
 	}
 
 	static void demo1_push_test() {
@@ -17,7 +18,6 @@ public class RRR {
 		stack.push(5);
 		System.out.println("Now size of Stack is: " + stack.getSize());
 		System.out.println("Stack is Full: " + stack);
-		System.out.println(stack.data[stack.size -1]);
 		System.out.println("top of Stack is: " + stack.peek());
 		stack.push(6);
 		System.out.println("Stack Overflow (should not push 6): " + stack);
@@ -89,9 +89,4 @@ public class RRR {
 		System.out.println("Stack: " + stack);
 		System.out.println("-------------------------------------");
 	}
-    
- 
-
 }
-
-
