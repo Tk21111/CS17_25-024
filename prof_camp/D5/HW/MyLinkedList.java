@@ -1,5 +1,6 @@
 package prof_camp.D5.HW;
 
+//25 N'Tonkla
 public class MyLinkedList {
 
     public Node head;

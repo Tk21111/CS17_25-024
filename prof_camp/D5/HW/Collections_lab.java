@@ -2,6 +2,8 @@ package prof_camp.D5.HW;
 
 import java.util.*;
 
+//25 N'Tonkla
+
 public class Collections_lab {
     public static void main(String[] args) {
         q1();

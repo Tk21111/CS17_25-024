@@ -2,6 +2,7 @@ package prof_camp.D5.HW;
 
 import java.util.Arrays;
 
+//25 N'Tonkla
 public class Arr2d_lab {
     public static void main(String[] args) {
 

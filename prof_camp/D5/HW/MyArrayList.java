@@ -2,6 +2,8 @@ package prof_camp.D5.HW;
 
 import java.util.*;
 
+//25 N'Tonkla
+
 public class MyArrayList {
 
     int[] data;

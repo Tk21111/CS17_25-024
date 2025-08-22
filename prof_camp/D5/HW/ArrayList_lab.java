@@ -1,5 +1,7 @@
 package prof_camp.D5.HW;
 
+//25 N'Tonkla
+
 public class ArrayList_lab {
     public static void main(String[] args) {
         q1();
