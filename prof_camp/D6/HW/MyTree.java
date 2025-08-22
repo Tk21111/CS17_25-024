@@ -3,6 +3,7 @@ package prof_camp.D6.HW;
 import java.util.LinkedList;
 import java.util.Queue;
 
+//25 N'Tonkla
 public class MyTree {
     public static void main(String[] args) {
         System.err.println();
@@ -67,7 +68,11 @@ public class MyTree {
         queue.add(root);
         while (!queue.isEmpty()) {
             Node curNode = queue.poll();
-            //add something here
+            
+            if(curNode.left == null && curNode.right == null)
+            {
+                System.out.print(curNode.data + " ");
+            }
             if (curNode.left != null) {
                 queue.add(curNode.left);
             }

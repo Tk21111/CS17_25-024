@@ -88,7 +88,11 @@ public class Mytree {
         queue.add(root);
         while (!queue.isEmpty()) {
             Node curr = queue.poll();
-            System.out.println(curr.data + " ");
+
+            if(curr.left == null && curr.right == null)
+            {
+                System.out.println(curr.data + " ");
+            }
 
             if (curr.left != null)
             {
